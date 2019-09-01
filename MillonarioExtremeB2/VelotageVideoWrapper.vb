@@ -2,20 +2,20 @@
 Namespace MillonarioExtremeB2
     Public Class VelotageVideoWrapper
 
-        Public Shared Sub LoadSplashVideo(ByVal GameFile As String, ByVal LoopScene As String, ResolutionX As Integer, ResolutionY As Integer, ResolutionMode As String, EditorEnabled As Boolean)
-
+        Public Shared Sub LoadSplashVideo(ByVal GameFile As String, ByVal LoopScene As String, ResolutionX As Integer, ResolutionY As Integer, ResolutionMode As String, ActiveForm As Form)
             Select Case ResolutionMode
                 Case "fullscreen"
-                    Form1.Width = VeloTage.ScreenManager.GetScreenX()
-                    Form1.Height = VeloTage.ScreenManager.GetScreenY()
+                    ActiveForm.FormBorderStyle = BorderStyle.None
+                    ActiveForm.Width = VeloTage.ScreenManager.GetScreenX()
+                    ActiveForm.Height = VeloTage.ScreenManager.GetScreenY()
                 Case "windowed"
-                    Form1.FormBorderStyle = BorderStyle.FixedSingle
-                    Form1.Width = ResolutionX
-                    Form1.Height = ResolutionY
+                    ActiveForm.FormBorderStyle = BorderStyle.FixedSingle
+                    ActiveForm.Width = ResolutionX
+                    ActiveForm.Height = ResolutionY
                 Case "windowless"
-                    Form1.FormBorderStyle = BorderStyle.None
-                    Form1.Width = ResolutionX
-                    Form1.Height = ResolutionY
+                    ActiveForm.FormBorderStyle = BorderStyle.None
+                    ActiveForm.Width = ResolutionX
+                    ActiveForm.Height = ResolutionY
                 Case Else
                     Throw New ApplicationException("Modo de pantalla desconocido. Prueba el fullscreen, windowed o windowless")
             End Select
@@ -31,13 +31,15 @@ Namespace MillonarioExtremeB2
             End If
 
         End Sub
-        Public Shared Sub AutoLoadScene(ByVal ConfigFileName As String, ByVal EditorEnabled As Boolean)
+
+
+        Public Shared Sub AutoLoadScene(ByVal ConfigFileName As String, ByVal NameOfForm As Form)
             Dim param1 As String = VeloengineCore.ReadConfigFile(VeloengineCore.SendEngineFolder & "/" & ConfigFileName, 3)
             Dim param2 As Boolean = False
             Dim param3 As String = VeloengineCore.ReadConfigFile(VeloengineCore.SendEngineFolder & "/" & ConfigFileName, 7)
             Dim param4 As String = VeloengineCore.ReadConfigFile(VeloengineCore.SendEngineFolder & "/" & ConfigFileName, 8)
             Dim param5 As String = VeloengineCore.ReadConfigFile(VeloengineCore.SendEngineFolder & "/" & ConfigFileName, 9)
-            VeloTage.SceneManager.LoadScene(param1, param2, param3, param4, param5, EditorEnabled)
+            MillonarioExtremeB2.VelotageVideoWrapper.LoadSplashVideo(param1, param2, param3, param4, param5, NameOfForm)
         End Sub
     End Class
 End Namespace

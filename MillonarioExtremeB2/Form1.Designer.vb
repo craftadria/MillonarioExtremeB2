@@ -34,11 +34,12 @@ Partial Class Form1
         '
         'AxShockwaveFlash1
         '
+        Me.AxShockwaveFlash1.Dock = System.Windows.Forms.DockStyle.Fill
         Me.AxShockwaveFlash1.Enabled = True
-        Me.AxShockwaveFlash1.Location = New System.Drawing.Point(2, 12)
+        Me.AxShockwaveFlash1.Location = New System.Drawing.Point(0, 0)
         Me.AxShockwaveFlash1.Name = "AxShockwaveFlash1"
         Me.AxShockwaveFlash1.OcxState = CType(resources.GetObject("AxShockwaveFlash1.OcxState"), System.Windows.Forms.AxHost.State)
-        Me.AxShockwaveFlash1.Size = New System.Drawing.Size(192, 192)
+        Me.AxShockwaveFlash1.Size = New System.Drawing.Size(284, 261)
         Me.AxShockwaveFlash1.TabIndex = 0
         '
         'Form1
@@ -48,6 +49,7 @@ Partial Class Form1
         Me.ClientSize = New System.Drawing.Size(284, 261)
         Me.Controls.Add(Me.AxShockwaveFlash1)
         Me.Name = "Form1"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Form1"
         CType(Me.AxShockwaveFlash1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)

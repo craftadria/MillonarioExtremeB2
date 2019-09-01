@@ -41,6 +41,7 @@ Partial Class Game
         Me.ClientSize = New System.Drawing.Size(284, 261)
         Me.Controls.Add(Me.Button1)
         Me.Name = "Game"
+        Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Game"
         Me.ResumeLayout(False)
 
