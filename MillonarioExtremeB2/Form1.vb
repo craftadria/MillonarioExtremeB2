@@ -7,18 +7,16 @@ Public Class Form1
     Dim ElapsedTime As Integer = 0
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Dim EngineFile As String = System.Windows.Forms.Application.ExecutablePath
-        Dim GameFolder As String = EngineFile & "_GameData"
+        Dim EngineFile As String = Application.StartupPath & "/GameData"
 
-        If System.IO.Directory.Exists(GameFolder) Then
+        If System.IO.Directory.Exists(EngineFile) Then
+            Timer1.Start()
+            MillonarioExtremeB2.VelotageVideoWrapper.AutoLoadScene("GameSettings.json", Me)
         Else
-
-            Throw New ApplicationException("Velotage can't find Millonario's folder in" & Name)
-
+            ErrorForm.Show()
         End If
-        Timer1.Start()
-        MillonarioExtremeB2.VelotageVideoWrapper.AutoLoadScene("GameSettings.json", Me)
     End Sub
+
 
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
 
