@@ -64,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.VideoSplashScreen.My.MySettings
+        Friend ReadOnly Property Settings() As Global.ConfiguratorLauncher.My.MySettings
             Get
-                Return Global.VideoSplashScreen.My.MySettings.Default
+                Return Global.ConfiguratorLauncher.My.MySettings.Default
             End Get
         End Property
     End Module

@@ -8,17 +8,17 @@ Imports System.Runtime.InteropServices
 
 ' Revisar los valores de los atributos del ensamblado
 
-<Assembly: AssemblyTitle("VideoSplashScreen")>
+<Assembly: AssemblyTitle("ConfiguratorLauncher")>
 <Assembly: AssemblyDescription("")>
 <Assembly: AssemblyCompany("")>
-<Assembly: AssemblyProduct("VideoSplashScreen")>
+<Assembly: AssemblyProduct("ConfiguratorLauncher")>
 <Assembly: AssemblyCopyright("Copyright ©  2019")>
 <Assembly: AssemblyTrademark("")>
 
 <Assembly: ComVisible(False)>
 
 'El siguiente GUID sirve como id. de typelib si este proyecto se expone a COM.
-<Assembly: Guid("de209e02-f5e8-4938-8698-5678901ddab8")>
+<Assembly: Guid("a381158e-f0c5-4374-bc76-ca5b7ba68740")>
 
 ' La información de versión de un ensamblado consta de los cuatro valores siguientes:
 '

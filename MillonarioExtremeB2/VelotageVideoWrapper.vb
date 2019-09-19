@@ -19,26 +19,25 @@ Namespace MillonarioExtremeB2
                 Case Else
                     Throw New ApplicationException("Modo de pantalla desconocido. Prueba el fullscreen, windowed o windowless")
             End Select
-            Dim filetoread As String = Application.StartupPath() & "/" & GameFile
 
-            If File.Exists(filetoread) Then
-                Form1.AxShockwaveFlash1.Loop = LoopScene
-                Form1.Location = New System.Drawing.Point(0, 0)
+            Form1.AxShockwaveFlash1.Loop = LoopScene
+            Form1.Location = New System.Drawing.Point(0, 0)
                 Form1.AxShockwaveFlash1.Size = New System.Drawing.Size(ResolutionX, ResolutionY)
-                Form1.AxShockwaveFlash1.Movie = filetoread
-            Else
-                Throw New ApplicationException("Error al volcar fichero a RAM")
-            End If
+            Form1.AxShockwaveFlash1.Movie = GameFile
+            'Else
+            'Throw New ApplicationException("Error al volcar fichero a RAM")
+            'End If
 
         End Sub
 
 
-        Public Shared Sub AutoLoadScene(ByVal ConfigFileName As String, ByVal NameOfForm As Form)
-            Dim param1 As String = VeloengineCore.ReadConfigFile(VeloengineCore.SendEngineFolder & "/" & ConfigFileName, 3)
+        Public Shared Sub AutoLoadScene(ByVal ConfigFileName As String, ByVal ResFile As String, ByVal NameOfForm As Form)
+            Dim RootAppDir As String = VeloengineCore.SendEngineFolder() & "/" & ConfigFileName
+            Dim param1 As String = VeloengineCore.ReadConfigFile(RootAppDir, 1) & "/GameData/" & ResFile
             Dim param2 As Boolean = False
-            Dim param3 As String = VeloengineCore.ReadConfigFile(VeloengineCore.SendEngineFolder & "/" & ConfigFileName, 7)
-            Dim param4 As String = VeloengineCore.ReadConfigFile(VeloengineCore.SendEngineFolder & "/" & ConfigFileName, 8)
-            Dim param5 As String = VeloengineCore.ReadConfigFile(VeloengineCore.SendEngineFolder & "/" & ConfigFileName, 9)
+            Dim param3 As String = VeloengineCore.ReadConfigFile(RootAppDir, 6)
+            Dim param4 As String = VeloengineCore.ReadConfigFile(RootAppDir, 9)
+            Dim param5 As String = VeloengineCore.ReadConfigFile(RootAppDir, 13)
             MillonarioExtremeB2.VelotageVideoWrapper.LoadSplashVideo(param1, param2, param3, param4, param5, NameOfForm)
         End Sub
     End Class
