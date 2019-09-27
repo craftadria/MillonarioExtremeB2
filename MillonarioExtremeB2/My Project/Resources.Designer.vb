@@ -59,14 +59,5 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
-        
-        '''<summary>
-        '''  Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
-        '''</summary>
-        Friend ReadOnly Property audioinexe() As System.IO.UnmanagedMemoryStream
-            Get
-                Return ResourceManager.GetStream("audioinexe", resourceCulture)
-            End Get
-        End Property
     End Module
 End Namespace

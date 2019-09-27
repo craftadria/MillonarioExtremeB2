@@ -13,18 +13,88 @@
     '  Dim GameState As String = 0
     Dim NextQuestion As Boolean = False
 
+    Dim cn As New System.Data.Odbc.OdbcConnection("Driver=Microsoft Access Driver (*.mdb);DBQ=Preguntas.MDB")
+    Dim Respuesta As Integer
+
     Private Sub Game_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Form1.Close()
+
+        Select Case VeloengineCore.ReadConfigFile(RootAppDir, 13)
+            Case "fullscreen"
+                Me.FormBorderStyle = BorderStyle.None
+                Me.Width = VeloTage.ScreenManager.GetScreenX()
+                Me.Height = VeloTage.ScreenManager.GetScreenY()
+            Case "windowed"
+                Me.FormBorderStyle = BorderStyle.FixedSingle
+                Me.Width = VeloengineCore.ReadConfigFile(RootAppDir, 6)
+                Me.Height = VeloengineCore.ReadConfigFile(RootAppDir, 9)
+            Case "windowless"
+                Me.FormBorderStyle = BorderStyle.None
+                Me.Width = VeloengineCore.ReadConfigFile(RootAppDir, 6)
+                Me.Height = VeloengineCore.ReadConfigFile(RootAppDir, 9)
+            Case Else
+                Throw New ApplicationException("Modo de pantalla desconocido. Prueba el fullscreen, windowed o windowless")
+        End Select
+
         VeloTage.AudioPlayer.GH3MusicPlayer(EngineFile & "/GameData/Sound/Music/GameBase.hld", "Preg100-1000")
         Me.BackgroundImage = Image.FromFile(EngineFile & "/GameData/Backgrounds/Game.png")
 
+
+        cn.Open()
     End Sub
+
+    Sub LeerPreguntas()
+        Dim TotalPreguntas As Integer
+        Dim cm As New Odbc.OdbcCommand("Select Numero from Preguntas order by Numero desc;")
+        cm.Connection = cn
+
+        Dim dr As Odbc.OdbcDataReader = cm.ExecuteReader()
+        If dr.Read() Then
+            TotalPreguntas = dr.GetInt32(0)
+        Else
+            TotalPreguntas = 0
+        End If
+        dr.Close()
+        cm.Dispose()
+        Dim a As Integer
+        Randomize(Now.Millisecond)
+        a = Int(1 + Rnd() * TotalPreguntas)
+        cm = New Odbc.OdbcCommand("Select * from Preguntas where Numero=" + a.ToString() + ";")
+        cm.Connection = cn
+        dr = cm.ExecuteReader()
+        If dr.Read() Then
+            Label1.Text = "PREGUNTA " + dr.GetValue(0).ToString()
+            Label2.Text = dr.GetValue(1)
+            Button1.Text = dr.GetValue(2)
+            Button2.Text = dr.GetValue(3)
+            Button3.Text = dr.GetValue(4)
+            Button4.Text = dr.GetValue(5)
+            Solucion = dr.GetInt32(6)
+        End If
+        dr.Close()
+        cm.Dispose()
+    End Sub
+    Private Sub Contestacion(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click, Button2.Click, Button4.Click, Button3.Click
+        Idle = False
+        Solucion = False
+        Misterio = True
+        MaquinaDeEstados()
+
+        If CInt(CType(sender, Button).Tag) = Solucion Then
+            'Timer1.Start()
+            VeloTage.AudioPlayer.GH3MusicPlayer(EngineFile & "/GameData/Sound/Music/GameBase.hld", "Correcto")
+
+            LeerPreguntas()
+        Else
+            Dim Sol As String = Choose(Solucion, Button1.Text, Button2.Text, Button3.Text, Button4.Text)
+            MsgBox("¡GAME OVER! - La respuesta correcta es: " & Sol)
+            cn.Close()
+            Close()
+        End If
+    End Sub
+
     Private Function LLamarPublico()
         VeloTage.AudioPlayer.GH3MusicPlayer(EngineFile & "/GameData/Sound/Music/GameBase.hld", "Publico")
-    End Function
-
-    Private Function Correcto()
-        VeloTage.AudioPlayer.GH3MusicPlayer(EngineFile & "/GameData/Sound/Music/GameBase.hld", "Correcto")
     End Function
 
 
@@ -35,7 +105,6 @@
         End If
 
         If Solucion = True Then
-            Correcto()
             Timer1.Start()
         End If
 
@@ -127,10 +196,7 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Idle = False
-        Solucion = False
-        Misterio = True
-        MaquinaDeEstados()
+
     End Sub
 
 
@@ -177,10 +243,12 @@
 
     End Sub
 
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
 
+    End Sub
+
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
         Level = TextBox1.Text
-
         Label1.Text = Llamando
         Label2.Text = Publico
         Label3.Text = Solucion
@@ -189,7 +257,7 @@
         Label6.Text = NextQuestion
     End Sub
 
-    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
         SaveGame("15", "5")
     End Sub
 End Class
